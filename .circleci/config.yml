@@ -1,0 +1,25 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - run:
+          name: Deploy to GCS
+          command: |
+            gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
+            gsutil -m cp -r ./versatile-hub-394914 /* gs://bucket1/
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
