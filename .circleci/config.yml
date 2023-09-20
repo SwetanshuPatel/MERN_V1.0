@@ -14,7 +14,7 @@ jobs:
           name: Deploy to GCS
           command: |
             gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-            gsutil -m cp -r ./versatile-hub-394914 /* gs://bucket1/
+            gsutil -m cp -r ./directory name /* gs://bucket name/
 workflows:
   version: 2
   build-deploy:
