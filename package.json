@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client && npm start",
+    "frontend": "cd frontend && npm start",
     "server": "node server.js",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "start": "concurrently \"npm run server\" \"npm run frontend\""
   },
   "keywords": [],
   "author": "",
@@ -14,7 +14,10 @@
   "description": "",
   "dependencies": {
     "concurrently": "^7.6.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "expresss": "^0.0.0",
+    "mongodb": "^6.1.0",
     "mongoose": "^7.5.1"
   }
 }
