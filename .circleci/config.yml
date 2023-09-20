@@ -13,8 +13,9 @@ jobs:
       - run:
           name: Deploy to GCS
           command: |
-            gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-            # gsutil -m cp -r ./directory name /* gs://bucket name/
+            gcloud config set project your-project-id  
+            gcloud auth application-default login  
+            # gsutil -m cp -r ./directory_name/* gs://bucket_name/
 workflows:
   version: 2
   build-deploy:
