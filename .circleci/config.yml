@@ -14,7 +14,7 @@ jobs:
           name: Deploy to GCS
           command: |
             gcloud config set project searce-playground-v1
-            gcloud auth application-default login  
+            # gcloud auth application-default login 
             # gsutil -m cp -r ./directory_name/* gs://bucket_name/
 workflows:
   version: 2
