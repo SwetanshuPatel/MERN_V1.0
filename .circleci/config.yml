@@ -26,17 +26,35 @@
 #             - build
 
 
-version: '2.1'
-orbs:
-  gcp-cli: circleci/gcp-cli@2.4.1
+version: 2.1
+
 jobs:
-  use-gcp:
-    executor: gcp-cli/default
+  build:
+    docker:
+      - image: circleci/node:14
+
     steps:
-      - gcp-cli/setup:
-          version: 404.0.0
+      - checkout
+
+      # Authenticate with GCP using the service account key
+      - run:
+          name: Authenticate with GCP
+          command: |
+            # echo "$GCP_SERVICE_ACCOUNT_KEY" | base64 --decode > /tmp/gcp-service-account-key.json
+            # gcloud auth activate-service-account --key-file=/tmp/gcp-service-account-key.json
+            # gcloud config set project searce-playground-v1
+
+      - run:
+          name: Clone GitHub Repository
+          command: git clone https://github.com/SwetanshuPatel/MERN_V1.0.git
+
+      - run:
+          name: Transfer to GCS Bucket
+          command: |
+            # gsutil -m cp -r MERN_V1.0/* gs://<YOUR_GCS_BUCKET_NAME>/
+            
 workflows:
-  install_and_configure_cli:
+  version: 2
+  build-and-deploy:
     jobs:
-      - use-gcp:
-          context: myContext
+      - build
