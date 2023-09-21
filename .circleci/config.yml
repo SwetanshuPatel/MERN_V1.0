@@ -1,26 +1,42 @@
-version: 2.1
-jobs:
-  build:
-    docker:
-      - image: circleci/node:14
-    steps:
-      - checkout
+# version: 2.1
+# jobs:
+#   build:
+#     docker:
+#       - image: circleci/node:14
+#     steps:
+#       - checkout
 
-  deploy:
-    docker:
-      - image: google/cloud-sdk
+#   deploy:
+#     docker:
+#       - image: google/cloud-sdk
+#     steps:
+#       - run:
+#           name: Deploy to GCS
+#           command: |
+#             gcloud config set project searce-playground-v1
+#             # gcloud auth application-default login 
+#             # gsutil -m cp -r ./directory_name/* gs://bucket_name/
+# workflows:
+#   version: 2
+#   build-deploy:
+#     jobs:
+#       - build
+#       - deploy:
+#           requires:
+#             - build
+
+
+version: '2.1'
+orbs:
+  gcp-cli: circleci/gcp-cli@2.4.1
+jobs:
+  use-gcp:
+    executor: gcp-cli/default
     steps:
-      - run:
-          name: Deploy to GCS
-          command: |
-            gcloud config set project searce-playground-v1
-            # gcloud auth application-default login 
-            # gsutil -m cp -r ./directory_name/* gs://bucket_name/
+      - gcp-cli/setup:
+          version: 404.0.0
 workflows:
-  version: 2
-  build-deploy:
+  install_and_configure_cli:
     jobs:
-      - build
-      - deploy:
-          requires:
-            - build
+      - use-gcp:
+          context: myContext
